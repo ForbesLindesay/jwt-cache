@@ -1,9 +1,9 @@
 {
-  "name": "@forbeslindesay/npm-package-template",
-  "description": "npm-package-template",
+  "name": "jwt-cache",
+  "description": "Cache an async function for generating a JSON Web Token",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "repository": "git@github.com:ForbesLindesay/npm-package-template.git",
+  "repository": "git@github.com:ForbesLindesay/jwt-cache.git",
   "author": "Forbes Lindesay <forbes@lindesay.co.uk>",
   "license": "MIT",
   "scripts": {
@@ -15,12 +15,16 @@
     "test": "jest",
     "ci:test": "jest --silent --maxWorkers=2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "jwt-decode": "^3.1.2"
+  },
   "devDependencies": {
     "@forbeslindesay/tsconfig": "^2.0.0",
     "@types/jest": "^25.2.1",
+    "@types/jsonwebtoken": "^8.5.5",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
+    "jsonwebtoken": "^8.5.1",
     "lint-staged": "^10.1.3",
     "prettier": "^2.0.4",
     "rimraf": "^3.0.2",
