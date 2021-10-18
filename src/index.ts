@@ -20,8 +20,10 @@ export default function jwtCache({
   eagerRefreshMilliseconds = 0,
   minimumValidityMilliseconds = 1_000,
 }: JwtCacheOptions) {
+  let disposed = false;
   let statePromise: undefined | Promise<State>;
   let nextState: undefined | Promise<State>;
+  let timeout: any;
   const getState = async (): Promise<State> => {
     const token = await getToken();
     const decoded = decode(token);
@@ -43,8 +45,9 @@ export default function jwtCache({
     state: State,
     currentStatePromise: Promise<State>,
   ) => {
+    if (disposed) return;
     if (eagerRefreshMilliseconds) {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         if (statePromise === currentStatePromise) {
           const thisNextState = (nextState = getState());
 
@@ -97,7 +100,16 @@ export default function jwtCache({
   }
 
   return {
+    dispose: () => {
+      disposed = true;
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    },
     getToken: async () => {
+      if (disposed) {
+        throw new Error(`Cannot get token after disposing jwt-cache`);
+      }
       const stateP = statePromise;
       if (!stateP) {
         return await getUpdatedToken(stateP);

@@ -1,7 +1,7 @@
 import {sign, verify} from 'jsonwebtoken';
 import jwtCache from '../';
 
-jest.setTimeout(30_000);
+jest.setTimeout(10_000);
 
 test('jwtCache - eager', async () => {
   let calls = 0;
@@ -40,6 +40,7 @@ test('jwtCache - eager', async () => {
     verify(t, 'my_secret');
   }
   expect(calls).toBe(2);
+  cache.dispose();
 });
 
 test('jwtCache - lazy', async () => {
