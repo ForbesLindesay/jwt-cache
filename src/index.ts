@@ -123,3 +123,5 @@ export default function jwtCache({
     },
   };
 }
+
+module.exports = Object.assign(jwtCache, {default: jwtCache});
